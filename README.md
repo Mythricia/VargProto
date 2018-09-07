@@ -74,7 +74,9 @@ The ilevel requirement scaling works by adjusting the minimum every time a new i
 The minimum does not jump immediately to whatever the player just looted, rather it checks whether the new item was significantly higher than the current minimum, and makes a small adjustment towards that higher level. Likewise if a player loots an item that is lower ilevel than the current minimum, and within a certain teshold (to avoid abuse), the minimum will make a small adjustment downwards again. This should allow the system to accomodate a character that has a period of high ilevel loot, followed by a long period of low ilevel loot, or vice versa. The rewards will not scale immediately, but given a reasonable period of time (a few days? a week?), the player will start earning Varg caches for the items they are looting once again.
 
     Technical:
+
     This is probably best implemented as a moving average of the ilevel of the last n eligible items you've looted, with a relatively small window size. This means that anomalous spikes and drops has little effect, but a consistent trend will lead to change pretty quickly (within n cycles, if the window size is n). This could be weighted towards the front or the back of the window to alter it's response.
+
 
 ### World Quest scaling
 
