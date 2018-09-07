@@ -1,0 +1,12 @@
+## Author: |cFFFFFFFFAvael|r @ Argent Dawn |cFF0000F0EU|r
+
+## Interface: 70200
+## Title: VargProto
+## Notes: Varg = Virtual Alternate Reality Game, also "wolf" in Swedish and Norwegian. Yes, very clever.
+## Version: 0.1
+## DefaultState: disabled
+## SavedVariablesPerCharacter: VargProto
+
+AvUtils.lua
+Dev.lua
+VargProto.lua
