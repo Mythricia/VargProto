@@ -1,6 +1,21 @@
 # The Adventures of Varg
     Varg = Virtual Alternate Reality Game, also Wolf, in Norwegian and Swedish
 
+<!-- TOC -->
+
+- [The Adventures of Varg](#the-adventures-of-varg)
+- [What is Varg?](#what-is-varg)
+    - [General overview](#general-overview)
+    - [ARG elements](#arg-elements)
+- [Misc Mechanics](#misc-mechanics)
+    - [Character profiles and maps](#character-profiles-and-maps)
+    - [Dynamic ARG content difficulty](#dynamic-arg-content-difficulty)
+        - [Loot item level scaling](#loot-item-level-scaling)
+        - [World Quest scaling](#world-quest-scaling)
+        - [Mythic dungeon / Mythic+ scaling](#mythic-dungeon--mythic-scaling)
+        - [Raiding rewards](#raiding-rewards)
+
+<!-- /TOC -->
 
 # What is Varg?
 Varg is a rogue-lite game with ARG elements, implemented as an addon inside World Of Warcraft. The "virtual" part of the name stems from the fact this is basically a game within a game, an ARG inside an already virtual world. Hence, Virtual Alternate Reality Game.
@@ -30,12 +45,12 @@ Some brainstorm ideas:
 * Maybe certain WoW NPC's, when targeted, can offer special things to occur in Varg, like special events.
 
 
+
+# Misc Mechanics
+
 ## Character profiles and maps
 
 Varg characters, and perhaps randomly generated maps (if they are a thing), would default to being specific to the character you are currently logged in to. You might have the option to create a global character, playable from any of your WoW characters, but with reduced rewards because of the potential to exploit this a lot. Obviously it's trivial to exploit literally anything since the Varg game data is stored in plain text in the WoW folder, but at least the smallest effort to discourage it will stop most people from ruining the fun for themselves.
-
-
-# Misc Mechanics
 
 
 ## Dynamic ARG content difficulty
