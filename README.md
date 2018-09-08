@@ -26,6 +26,8 @@ Varg is played through a text-console type interface, as most rogue-likes are. U
 
 The player starts by creating a character, very much in the rogue-like manner of giving a name, picking some base traits and skill points, perhaps picking some deities or other interesting choices. All of these would be somewhat WoW-themed, things like deities could be notable Gods or God-like creatures from WoW lore. Or, perhaps slight word-plays on them, as to not literally rip off the existing wow names. The same idea applies to enemies, items, areas, all sorts of things you might find in the game in general.
 
+Once the character is created, you play the game essentially like any other text based RPG, typing commands, inspecting the environment, moving around, fighting, looting, exploring. It will be a somewhat simple game on its own, however the ARG elements conneting your Varg character to your World of Warcraft gameplay is what makes it interesting. On its own, Varg is merely a distraction - but that is the point. You are meant to occasionally play it, while spending most of your time just playing WoW.
+
 
 ## ARG elements
 Essentially the main point of the game, is that there are a lot of ARG-elements in relation to the World Of Warcraft character that you are actually playing. Doing interesting things in WoW, could lead to benefits (or disadvantages for that matter) for your Varg character.
