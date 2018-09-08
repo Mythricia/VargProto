@@ -54,7 +54,7 @@ addonLoadedFrame:SetScript("OnEvent", addonLoaded)
 
 
 
--- TEST: Check if the item recieved by player is either an armor piece or a weapon
+-- TEST: Check if the item recieved by player is either an armor piece or a weapon. Using the "new" WoW ObjectAPI (Interface\FrameXML\ObjectAPI\*)
 -- FIXME: Should also check if soulbound, disabled for testing
 local knownItems = {}
 
@@ -71,8 +71,12 @@ local function updateItems(bag)
 		  local itemID = currentItem:GetItemID()
 		  local itemName = currentItem:GetItemName()
 		  local itemlvl = currentItem:GetCurrentItemLevel()
-		  local itemType = _G[currentItem:GetInventoryTypeName()]
-		  if itemType and not knownItems[itemID] then
+
+		  -- Use old API to get superType, since ObjectAPI gives subType for some reason
+		  local itemType = select(2, GetItemInfoInstant(itemID))
+
+		  -- Check that the item is either actually armor or weapon
+		  if (itemType == "Armor" or itemType == "Weapon") and not knownItems[itemID] then
 			 print("New valid item: " .. itemName .. " ("..itemID..")"..", type '"..itemType.."', ilvl "..itemlvl)
 			 knownItems[itemID] = true
 		  end      
