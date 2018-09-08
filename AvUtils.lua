@@ -4,6 +4,9 @@
 local _, addonTable = ...
 addonTable.AvUtil = {}
 
+-- Avoid tainting global _
+local _
+
 -- Pretty color tags
 local cTag = "|cFF"	-- Separate the tag and Alpha (always FF) from the actual hex color definitions
 local AvColors = {
@@ -20,7 +23,7 @@ local AvColors = {
   lootWhite = ITEM_QUALITY_COMMON,
   lootGreen = ITEM_QUALITY_UNCOMMON,
   lootBlue = ITEM_QUALITY_RARE,
-  lootPurple = lootEpic = ITEM_QUALITY_EPIC
+  lootPurple = ITEM_QUALITY_EPIC,
 }
 
 -- Misc. Tables and functionality related variables
@@ -221,5 +224,4 @@ addonTable.AvUtil.GenerateContNames = GenerateContNames
 addonTable.AvUtil.FormatDecimalString = FormatDecimalString
 addonTable.AvUtil.AvColors = AvColors
 addonTable.AvUtil.GetCurrentInstanceTier = GetCurrentInstanceTier
-addonTable.AvUtil.InstanceTable
 addonTable.AvUtil.GenerateInstanceTable = GenerateInstanceTable

@@ -20,6 +20,9 @@ local print = print
 local tostring = tostring
 local tonumber = tonumber
 
+-- Avoid tainting global _
+local _
+
 -- AvUtils
 local au_genContNames = addonTable.AvUtil.GenerateContNames
 local au_getPMapInfos = addonTable.AvUtil.GetPlayerMapInfos	-- {contName, zone, subzone}
@@ -42,14 +45,40 @@ addonLoadedFrame:RegisterEvent("ADDON_LOADED")
 local function addonLoaded (self, event, ...)
 	if event == "ADDON_LOADED" and ... == addonName then
 		isAddonLoaded = true
-		print( addonPrettyName .. " loaded. ".."\nUse "..au_AvColors.cyan.."/ava spam|r to see logging activity."..
-		"\nUse "..au_AvColors.cyan.."/ava|r to see options "..au_AvColors.red.."(beware dragons)\n");
+		print( addonName .. " loaded. ")
 	end
 end
 
 -- Register the db init to our addon load frame
 addonLoadedFrame:SetScript("OnEvent", addonLoaded)
 
+
+
+-- TEST: Check if the item recieved by player is either an armor piece or a weapon
+-- FIXME: Should also check if soulbound, disabled for testing
+local knownItems = {}
+
+local function updateItems(bag)
+	local numSlots = GetContainerNumSlots(bag)
+
+	for slot = 1, numSlots do
+	   local currentItem = Item:CreateFromBagAndSlot(bag, slot)
+	   
+	   if not currentItem:IsItemEmpty() then      
+		  local location = currentItem:GetItemLocation()
+		  
+		  -- Store some data
+		  local itemID = currentItem:GetItemID()
+		  local itemName = currentItem:GetItemName()
+		  local itemlvl = currentItem:GetCurrentItemLevel()
+		  local itemType = _G[currentItem:GetInventoryTypeName()]
+		  if itemType and not knownItems[itemID] then
+			 print("New valid item: " .. itemName .. " ("..itemID..")"..", type '"..itemType.."', ilvl "..itemlvl)
+			 knownItems[itemID] = true
+		  end      
+	   end   
+	end	
+end
 
 
 ---------------------BEGIN---------------------
@@ -61,14 +90,8 @@ local hookedEvents = {}
 
 
 -- Example template
-function hookedEvents.SOME_LUA_EVENT(...)
-
-	local function SomeEventHandlingCode(arg1, arg2, arg3)
-		return sumOfArgs = arg1 + arg2 + arg3
-	end
-
-	local a1, a2, a3 = ...
-	SomeEventHandlingCode(a1, a2, a3)
+function hookedEvents.BAG_UPDATE(...)
+	updateItems(...)
 end
 
 ----------------------END----------------------
@@ -115,7 +138,7 @@ eventHandlerFrame:SetScript("OnEvent", catchEvent)
 -----------------------------
 
 -- Required WoW API globals for /command variants
-SLASH_VARGPROTO1, SLASH_VARGPROTO2 = "/vargp", "/vargproto";
+SLASH_VARGPROTO1, SLASH_VARGPROTO2, SLASH_VARGPROTO3 = "/vargp", "/vargproto", "/vp";
 
 
 
