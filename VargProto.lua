@@ -46,6 +46,12 @@ local function addonLoaded (self, event, ...)
 	if event == "ADDON_LOADED" and ... == addonName then
 		isAddonLoaded = true
 		print( addonName .. " loaded. ")
+
+		if not VargProto then
+			VargProto = {}
+		end
+
+		addonTable.data = VargProto
 	end
 end
 
@@ -59,12 +65,16 @@ addonLoadedFrame:SetScript("OnEvent", addonLoaded)
 local knownItems = {}
 
 local function updateItems(bag)
+	if not addonLoaded then return end -- Bail if not loaded
+
 	local numSlots = GetContainerNumSlots(bag)
+	local batchSum = 0
+	local counter = 0
 
 	for slot = 1, numSlots do
 	   local currentItem = Item:CreateFromBagAndSlot(bag, slot)
 	   
-	   if not currentItem:IsItemEmpty() then      
+	   if not currentItem:IsItemEmpty() then
 		  local location = currentItem:GetItemLocation()
 		  
 		  -- Store some data
@@ -79,9 +89,23 @@ local function updateItems(bag)
 		  if (itemType == "Armor" or itemType == "Weapon") and not knownItems[itemID] then
 			 print("New valid item: " .. itemName .. " ("..itemID..")"..", type '"..itemType.."', ilvl "..itemlvl)
 			 knownItems[itemID] = true
-		  end      
-	   end   
-	end	
+			 batchSum = batchSum + itemlvl
+			 counter = counter + 1
+		  end
+	   end
+	end
+
+	-- Calculate the average and update SavedVar. Only run if necessary
+	if batchSum > 0 then
+		if not addonTable.data.avgIlevel then
+			addonTable.data.avgIlevel = batchSum / counter
+			print("Varg avgilevel initialized to: "..addonTable.data.avgIlevel)
+			return
+		end
+
+		addonTable.data.avgIlevel = (addonTable.data.avgIlevel + (batchSum / counter)) / 2
+		print("New average: "..addonTable.data.avgIlevel)
+	end
 end
 
 
@@ -187,6 +211,28 @@ slashCommands.verboseerrors = {
 	end,
 
 	desc = "Toggles extra verbose error logging"
+}
+
+
+slashCommands.resetavg = {
+	func = function(...)
+		addonTable.data.avgIlevel = nil
+	end,
+
+	desc = "Wipes the average ilevel for this character."
+}
+
+
+slashCommands.showavg = {
+	func = function(...)
+		if addonTable.data.avgIlevel then
+			print(addonTable.data.avgIlevel)
+		else
+			print("Avg ilevel not initialized yet.")
+		end
+	end,
+
+	desc = "Print the current average ilevel for this character."
 }
 
 
